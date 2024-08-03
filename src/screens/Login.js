@@ -4,6 +4,7 @@ import { Input, Form, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,13 +21,16 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://task-backend-atjw.onrender.com/api/users/login",
         formData
       );
+      setLoading(false);
       navigate("/login-success");
     } catch (error) {
+      setLoading(false);
       alert(error.response.data.message);
     }
   };
@@ -82,7 +86,7 @@ function Login() {
                     onChange={handleChange}
                   />
                 </Form.Item>
-                <Button type="primary" htmlType="sumbit">
+                <Button disabled={loading} type="primary" htmlType="sumbit">
                   Login
                 </Button>
               </div>

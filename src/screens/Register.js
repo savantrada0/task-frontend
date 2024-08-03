@@ -4,6 +4,7 @@ import { Input, Form, Button } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -23,6 +24,7 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading("true");
     const { pathname } = location;
     let data = formData;
     if (pathname == "/customer") {
@@ -35,8 +37,10 @@ const Register = () => {
         "https://task-backend-atjw.onrender.com/api/users/register",
         data
       );
+      setLoading("false");
       navigate("/register-success");
     } catch (error) {
+      setLoading("false");
       alert(error.response.data.message);
     }
   };
@@ -125,7 +129,7 @@ const Register = () => {
                     onChange={handleChange}
                   />
                 </Form.Item>
-                <Button type="primary" htmlType="sumbit">
+                <Button disabled={loading} type="primary" htmlType="sumbit">
                   Register
                 </Button>
               </div>
