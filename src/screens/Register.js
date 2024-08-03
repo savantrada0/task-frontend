@@ -37,10 +37,10 @@ const Register = () => {
         "https://task-backend-atjw.onrender.com/api/users/register",
         data
       );
-      setLoading("false");
+      setLoading(false);
       navigate("/register-success");
     } catch (error) {
-      setLoading("false");
+      setLoading(false);
       alert(error.response.data.message);
     }
   };
